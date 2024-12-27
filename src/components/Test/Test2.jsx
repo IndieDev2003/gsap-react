@@ -10,7 +10,7 @@ function Test2() {
   useGSAP(() => {
     const tl = timelineRef.current;
 
-    tl.clear();
+    tl.play();
     tl.fromTo(
       ".center-text-h2",
       { scale: 10 },
