@@ -82,9 +82,7 @@ function Test2() {
           <TestBox key={i} className="box" />
         ))}
       </div>
-      <button className="px-10 py-2 border-[10px] absolute bottom-0 ">
-        Run Again
-      </button>
+  
     </div>
   );
 }
