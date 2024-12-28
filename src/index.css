@@ -9,6 +9,11 @@
   font-family: "Outfit";
 }
 
+body{
+  background: url(https://i.pinimg.com/1200x/05/7a/65/057a654727c8ef33e0864c97a23a6443.jpg);
+  @apply bg-cover bg-center;
+}
+
 .prata{
   font-family: 'Podkova';
 }

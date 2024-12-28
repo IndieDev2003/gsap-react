@@ -11,28 +11,32 @@ function Test2() {
     const tl = timelineRef.current;
 
     tl.play();
+
+
     tl.fromTo(
       ".center-text-h2",
-      { scale: 10 },
-      { scale: 1, duration: 2, ease: "power2.out" }
+      { scale: 10,opacity:0 },
+      { scale: 1,opacity:1, duration: 2, ease: "power2.out" }
     )
-      .from("button", {
-        opacity: 0,
-        y: -30,
-        duration: 1,
-      })
+      
       .from(".bg-img", {
         y: "100%",
         duration: 2,
         ease: "bounce",
-        onComplete: () => {
+        
+      })
+      .from(".btn-1", {
+        opacity: 0,
+        y: -30,
+        duration: 1,
+        onComplete: function () {
           tl.pause();
-        },
+        }
       })
       .to(".center-text-h2, .btn-1", {
         y: "-100%",
         opacity: 0,
-        delay: 2,
+        delay: 1,
       })
       .from(".bg-img-2", {
         x: "100%",
@@ -49,6 +53,9 @@ function Test2() {
 
   const handlePlay = () => {
     timelineRef.current.play();
+  };
+  const handleReplay = () => {
+    timelineRef.current.reverse();
   };
 
   return (
@@ -77,11 +84,18 @@ function Test2() {
       </div>
 
       {/* Boxes */}
-      <div className="box-div absolute top-0 flex-col sm:flex-row flex-wrap gap-1 w-full z-[0] items-center justify-evenly h-full mt-5 flex">
+      <div className="box-div absolute top-0 flex-col gap-2 sm:flex-row flex-wrap gap-y-6 w-full z-[0] items-center justify-evenly h-fit mt-5 flex">
         {[...Array(8)].map((_, i) => (
           <TestBox key={i} className="box" />
         ))}
       </div>
+
+      <button onClick={handleReplay} className="px-10 py-2 border-2 rounded-full z-[100] fixed bottom-10 bg-white left-44">
+        Reverse
+      </button>
+      <button onClick={handlePlay} className="px-10 py-2 border-2 rounded-full z-[100] fixed bottom-10  bg-white right-44">
+        Play
+      </button>
   
     </div>
   );
