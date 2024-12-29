@@ -6,6 +6,7 @@ import gsap from "gsap";
 
 function July7() {
   const pageRef = useRef(null);
+  const timelineRef = useRef(gsap.timeline({ paused: false }));
 
   const typedRef = useRef(null);
   const typedInstance = useRef(null);
@@ -14,7 +15,7 @@ function July7() {
 
   useGSAP(
     () => {
-      const tl = gsap.timeline();
+      const tl = timelineRef.current;
       tl.fromTo(
         ".center-title-text",
         {
@@ -26,47 +27,29 @@ function July7() {
         y: "150px",
         duration: 3,
       });
-      tl.from(".typing-para", {
+
+      tl.from(".para-container", {
         opacity: 0,
-        duration: 2,
-        onComplete:()=>typedInstance.current.start()
+        duration: 1.4,
+        
+      })
+      tl.from(".typing-para", {
+        y: 20,
+        opacity: 0, x:10,
+        // duration: 2,
+        // ease: "elastic",
+        stagger: 0.6,
+      })
+
+      tl.from("button", {
+        y: -30,
+       
+        opacity: 0,
+        stagger: 0.6,
       });
-      // tl.from('button', {
-      //   y: -30,
-      //   opacity: 0,
-      //   stagger:0.6
-      // })
     },
     { scope: pageRef.current }
   );
-
-
-  const buttonAnim = contextSafe(() => {
-    gsap.from('button', {
-      y: -30,
-      opacity: 0,
-      stagger:0.6
-    })
-  })
-
-  useEffect(() => {
-    // Initialize Typed.js
-    typedInstance.current = new Typed(typedRef.current, {
-      strings: secondEncounter.para,
-      typeSpeed: 50,
-      backSpeed: 25,
-      loop: true,
-      // onComplete:buttonAnim
-      // showCursor: false,
-    });
-    typedInstance.current.stop();
-
-    console.log(secondEncounter.backImg);
-    // Cleanup on unmount
-    return () => {
-      typedInstance.current.destroy();
-    };
-  }, []);
 
   return (
     <div
@@ -79,21 +62,25 @@ function July7() {
         <h2 className="center-title-text text-5xl mb-3 text-white font-semibold">
           {secondEncounter.title}
         </h2>
-        <p
-          ref={typedRef}
-          className="typing-para text-start text-lg h-full px-2 backdrop-blur-sm py-2 border rounded-lg text-white w-full"
-        ></p>
+
+        <div className="w-full border h-full p-3 backdrop-blur rounded-lg para-container">
+          {
+            secondEncounter.para.map((line, key) => (
+              <p className="text-start w-full text-lg typing-para text-white"  key={key}>{line}</p>
+            ))
+          }
+        </div>
 
         <div className="mt-4 flex gap-4">
           <button
             className="border-2 px-10 drop-shadow-lg shadow-xl bg-gray-100  py-2 rounded-full"
-            onClick={() => typedInstance.current.start()}
+            onClick={() => timelineRef.current.play()}
           >
             Start
           </button>
           <button
             className="border-2 px-10 drop-shadow-lg shadow-xl bg-gray-100  py-2 rounded-full"
-            onClick={() => typedInstance.current.stop()}
+            onClick={() =>  timelineRef.current.pause()}
           >
             Stop
           </button>
