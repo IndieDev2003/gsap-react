@@ -16,9 +16,9 @@ function App() {
   return (
     <div className="h-screen  w-[1024px] mx-auto">
       {/* <AnotherPage/> */}
-      {/* <Hero/> */}
+      <Hero/>
       {/* <May9 /> */}
-      <July7 />
+      {/* <July7 /> */}
     </div>
   );
 }
